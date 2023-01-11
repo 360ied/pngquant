@@ -497,7 +497,7 @@ static pngquant_error rwpng_write_image_init(rwpng_png_image *mainprog_ptr, png_
     } else if (fast_compression == 1) {
         compression_level = Z_BEST_SPEED;
     } else {
-        compression_level = Z_BEST_COMPRESSION
+        compression_level = Z_BEST_COMPRESSION;
     }
 
     png_set_compression_level(*png_ptr_p, compression_level);
