@@ -21,6 +21,7 @@ options:\n\
   --posterize N     output lower-precision color (e.g. for ARGB4444 output)\n\
   --strip           remove optional metadata (default on Mac)\n\
   --verbose         print status messages (synonym: -v)\n\
+  --uncompressed    do not compress output PNG\n\
 \n\
 Quantizes one or more 32-bit RGBA PNGs to 8-bit (or smaller) RGBA-palette.\n\
 The output filename is the same as the input name except that\n\
@@ -510,7 +511,11 @@ static pngquant_error pngquant_file_internal(const char *filename, const char *o
             output_image.maximum_file_size = (input_image_rwpng.file_size-1) * (expected_reduced_size < 0.5 ? 0.5 : expected_reduced_size);
         }
 
-        output_image.fast_compression = options->fast_compression;
+        if (options->uncompressed) {
+          output_image.fast_compression = 2;
+        } else {
+          output_image.fast_compression = options->fast_compression;
+        }
         output_image.chunks = input_image_rwpng.chunks; input_image_rwpng.chunks = NULL;
         retval = write_image(&output_image, NULL, outname, options, liq);
 

@@ -52,7 +52,8 @@ static void fix_obsolete_options(const unsigned int argc, char *argv[])
 }
 
 enum {arg_floyd=1, arg_ordered, arg_ext, arg_no_force, arg_iebug,
-    arg_transbug, arg_map, arg_posterize, arg_skip_larger, arg_strip};
+    arg_transbug, arg_map, arg_posterize, arg_skip_larger, arg_strip,
+    arg_uncompressed};
 
 static const struct option long_options[] = {
     {"verbose", no_argument, NULL, 'v'},
@@ -74,6 +75,7 @@ static const struct option long_options[] = {
     {"map", required_argument, NULL, arg_map},
     {"version", no_argument, NULL, 'V'},
     {"help", no_argument, NULL, 'h'},
+    {"uncompressed", no_argument, NULL, arg_uncompressed},
     {NULL, 0, NULL, 0},
 };
 
@@ -154,6 +156,10 @@ pngquant_error pngquant_parse_options(int argc, char *argv[], struct pngquant_op
 
             case 'V':
                 options->print_version = true;
+                break;
+
+            case arg_uncompressed:
+                options->uncompressed = true;
                 break;
 
             case -1: break;
